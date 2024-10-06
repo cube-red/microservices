@@ -1,6 +1,7 @@
 package com.microservices.currency_conversion;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ public class CurrencyConversionController {
     @Autowired
     private CurrencyExchangeProxy proxy;
 
+    @Autowired
+    private Environment environment;
     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversionFeign(
             @PathVariable String from,
@@ -25,11 +28,14 @@ public class CurrencyConversionController {
     ){
         CurrencyConversion currencyConversion = proxy.calculateCurrencyConversion(from,to);
 
+
+
+        System.out.println(currencyConversion);
         return new CurrencyConversion(currencyConversion.getId(),
                 from, to, quantity,
                 currencyConversion.getConversionMultiple(),
                 quantity.multiply(currencyConversion.getConversionMultiple()),
-                currencyConversion.getEnvironment()+ " " + "feign");
+                currencyConversion.getEnvironment() + " " + "feign");
     }
 
 

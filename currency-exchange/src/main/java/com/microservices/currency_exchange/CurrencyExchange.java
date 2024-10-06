@@ -21,6 +21,14 @@ public class CurrencyExchange {
 
     public String environment;
 
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
     public Long getId() {
         return id;
     }
